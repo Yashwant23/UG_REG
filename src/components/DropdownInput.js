@@ -1,33 +1,24 @@
+// DropdownInput.js
 import React from 'react';
 import { TextField, MenuItem } from '@mui/material';
 
-const DropdownInput = ({ label, value, onChange, options }) => {
+const DropdownInput = ({ label, value, onChange, options, required, pageNo }) => {
     const handleInputChange = (event) => {
         const { value } = event.target;
         onChange(value);
-        localStorage.setItem(label, value);
+
     };
 
     return (
         <TextField
             select
             label={label}
-            variant="filled"
+            variant="outlined"
             color="primary"
             fullWidth
             value={value}
             onChange={handleInputChange}
-            sx={{
-                '& fieldset': {
-                    borderColor: 'blue', // Change outline color to blue
-                },
-                '&:hover fieldset': {
-                    borderColor: 'blue', // Change outline color on hover to blue
-                },
-                '&.Mui-focused fieldset': {
-                    borderColor: 'blue', // Change outline color on focus to blue
-                },
-            }}
+            required={required}
         >
             {options.map((option) => (
                 <MenuItem key={option.value} value={option.value}>

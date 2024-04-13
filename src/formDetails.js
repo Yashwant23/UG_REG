@@ -12,7 +12,7 @@ const forms = [
         { type: 'text', label: 'Field 8' },
         { type: 'text', label: 'Field 9' },
         {
-            type: 'dropdown',
+            type: 'Dropdown',
             label: 'Select State', // Changed label
             options: [
                 { label: "Andhra Pradesh", value: "Andhra Pradesh" },
@@ -58,16 +58,25 @@ const forms = [
     },
     {
         Page: 2,
-        Des: "hellow welcome to page 2hellow welcome to page 2hellow welcome to page 2hellow welcome to page 2hellow welcome to page 2",
-        fields: [{ type: 'text', label: 'Name' },
-        { type: 'text', label: 'Field 2' },
-        { type: 'text', label: 'Field 3' },
-        { type: 'text', label: 'Field 4' },
-        { type: 'text', label: 'Field 5' },
-        { type: 'text', label: 'Field 6' },
-        { type: 'text', label: 'Field 7' },
-        { type: 'text', label: 'Field 8' },
-        { type: 'text', label: 'Field 9' },
+        Des: "Personal Deatils \nEnter Your Personel Details",
+        fields: [{ type: 'text', label: 'Jee Main Application Number' },
+        { type: 'text', label: 'Institute Name' },
+        { type: 'text', label: 'First Name' },
+        { type: 'text', label: 'Middle Name' },
+        { type: 'text', label: 'Last Name' },
+        { type: 'text', label: 'Email' },
+        { type: 'text', label: 'Contact Number' },
+        {
+            type: 'dropdown', label: 'Category',
+            options: [
+                { label: "SC", value: "SC" },
+                { label: "ST", value: "ST" },
+                { label: "Gen", value: "Gen" },
+                { label: "OBC", value: "OBC" },
+            ]
+        },
+        { type: 'text', label: 'Allocated Category' },
+        { type: 'text', label: 'Country' },
         {
             type: 'dropdown',
             label: 'Select State', // Changed label
@@ -110,7 +119,38 @@ const forms = [
                 { label: "Lakshadweep", value: "Lakshadweep" },
                 { label: "Puducherry", value: "Puducherry" },
             ]
-        }]
+        },
+        { type: 'text', label: 'City' },
+        { type: 'text', label: 'Pincode' },
+        { type: 'text', label: 'Permanent Address 1' },
+        { type: 'text', label: 'Permanent Address 2' },
+        {
+            type: 'dropdown', label: 'Blood Group',
+            options: [
+                { label: "AB+", value: "AB+" },
+                { label: "A+", value: "A+" },
+                { label: "B+", value: "B+" },
+                { label: "O+", value: "O+" },
+                { label: "AB-", value: "AB-" },
+                { label: "A-", value: "A-" },
+                { label: "B-", value: "B-" },
+                { label: "O-", value: "O-" },
+            ]
+        },
+        { type: 'text', label: 'Nationality' },
+        {
+            type: 'dropdown', label: 'Religion',
+            options: [
+                { label: "Hindu", value: "Hindu" },
+                { label: "Muslim", value: "MuslChristian" },
+                { label: "Christian", value: "Christian" },
+                { label: "Shikh", value: "Shikh" },
+            ]
+        },
+        { type: 'text', label: 'Birthplace' },
+        { type: 'file', label: 'Upload Photo' },
+        { type: 'file', label: 'Upload Signature' },
+        ]
     },
     {
         Page: 3,
@@ -137,7 +177,7 @@ const forms = [
         { type: 'text', label: 'Course' },
         { type: 'text', label: 'Branch' },
         {
-            type: 'dropdown',
+            type: 'Dropdown',
             label: 'Select State', // Changed label
             options: [
                 { label: "Andhra Pradesh", value: "Andhra Pradesh" },

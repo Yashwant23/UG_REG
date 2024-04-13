@@ -7,7 +7,7 @@ import FileUploadInput from './FileUploadInput';
 import forms from '../formDetails'
 const theme = createTheme(); // Import or create your own theme
 
-const FormDisplay = ({ fields, Page, Des }) => {
+const Form1 = ({ fields, Page, Des }) => {
 
     const [formValues, setFormValues] = useState(() => {
         const initialFormValues = {};
@@ -90,4 +90,4 @@ const FormDisplay = ({ fields, Page, Des }) => {
 
 };
 
-export default FormDisplay;
+export default Form1;
