@@ -29,12 +29,18 @@ const PageForm = () => {
     const handleNext = () => {
         if (currentPage < forms.length - 1) {
             setCurrentPage(currentPage + 1);
+            // Reset form values when moving to the next page
+            const nextPageFields = forms[currentPage + 1].fields.map(({ label }) => ({ [label]: '' }));
+            setFormValues(Object.assign({}, ...nextPageFields));
         }
     };
 
     const handleBack = () => {
         if (currentPage > 0) {
             setCurrentPage(currentPage - 1);
+            // Reset form values when moving to the previous page
+            const prevPageFields = forms[currentPage - 1].fields.map(({ label }) => ({ [label]: '' }));
+            setFormValues(Object.assign({}, ...prevPageFields));
         }
     };
 
@@ -58,6 +64,7 @@ const PageForm = () => {
                                         onChange={handleInputChange(label)}
                                         required={required}
                                         disabled={disabled}
+                                        pageNo={currentPage + 1} // Pass pageNo prop
                                     />
                                 )}
                                 {type === 'dropdown' && (
@@ -68,12 +75,14 @@ const PageForm = () => {
                                         options={options}
                                         required={required}
                                         disabled={disabled}
+                                        pageNo={currentPage + 1} // Pass pageNo prop
                                     />
                                 )}
                                 {type === 'file' && (
                                     <FileUploadInput
                                         label={label}
                                         onChange={(file) => console.log(file)} // You can handle file upload logic here
+                                        pageNo={currentPage + 1} // Pass pageNo prop
                                     />
                                 )}
                                 {/* Add more conditional rendering for other types if needed */}
