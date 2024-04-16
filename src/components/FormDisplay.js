@@ -29,6 +29,7 @@ const FormDisplay = ({ fields, Page, Des }) => {
         // Add form validation and submission logic here
     };
 
+
     return (
         <ThemeProvider theme={theme}>
             <Paper style={{ padding: theme.spacing(3), margin: 'auto', width: '90%' }}>

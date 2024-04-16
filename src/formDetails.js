@@ -56,6 +56,7 @@ const forms = [
         }
         ]
     },
+
     {
         Page: 2,
         Des: "Personal Deatils \nEnter Your Personel Details",
