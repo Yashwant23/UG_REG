@@ -50,10 +50,11 @@ const Navbar = () => {
 
             {/* Second layer: Navigation options */}
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button color="inherit">Dashboard</Button>
-                <Button color="inherit">Fee Payment</Button>
-                <Button color="inherit">Registration</Button>
-                <Button color="inherit">Downloads</Button>
+                {/* <Link to="/"><Button color="inherit">Dashboard</Button></Link> */}
+                <Link to="/dashboard"><Button color="inherit">Dashboard</Button></Link>
+                <Link to="/registration"><Button color="inherit">Fee Payment</Button></Link>
+                <Link to="/registration"><Button color="inherit">Registration</Button></Link>
+                <Link to="/downloads"><Button color="inherit">Downloads</Button></Link>
             </Toolbar>
         </AppBar>
     );
