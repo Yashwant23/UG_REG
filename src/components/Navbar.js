@@ -26,7 +26,7 @@ const Navbar = () => {
             <Toolbar>
                 {/* Left side: Logo and name */}
                 <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    Your Brand
+                    IIT ISM
                 </Typography>
 
                 {/* Right side: Avatar */}
