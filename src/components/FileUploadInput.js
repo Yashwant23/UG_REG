@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 const FileUploadInput = ({ label, onChange, required = true, pageNo }) => {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
+    const [filled, setFilled] = useState(false); // Initialize filled state
 
     const handleInputChange = (event) => {
         const selectedFile = event.target.files[0];
         setFile(selectedFile);
         setPreview(URL.createObjectURL(selectedFile));
+        setFilled(true); // Set filled state to true when file is selected
     };
 
     useEffect(() => {
@@ -41,6 +43,7 @@ const FileUploadInput = ({ label, onChange, required = true, pageNo }) => {
         if (storedFileName !== null) {
             onChange(storedFileName);
             setPreview(storedPreview);
+            setFilled(true); // Set filled state to true when file is present in localStorage
         }
     }, [label, onChange, pageNo]);
 
@@ -51,9 +54,12 @@ const FileUploadInput = ({ label, onChange, required = true, pageNo }) => {
                 type="file"
                 id={label}
                 onChange={handleInputChange}
-                required={required}
+                required={!required}
             />
             {preview && <img src={preview} alt="preview" />}
+            {!filled && required && (
+                <p style={{ color: 'red' }}>This field is required.</p>
+            )}
         </div>
     );
 };

@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Paper, Grid, Button, Typography, Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextFieldInput from './TextFieldInput';
 import DropdownInput from './DropdownInput';
 import FileUploadInput from './FileUploadInput';
-import PageBar from './PageBar'; // Replace with your actual PageBar component
-import forms from '../formDetails'; // Replace with your actual form data
+import PageBar from './PageBar';
+import forms from '../formDetails';
 
-const theme = createTheme(); // Import or create your own theme
+const theme = createTheme();
 
 const PageForm = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [formValues, setFormValues] = useState(() => {
         const initialFormValues = {};
         forms[currentPage].fields.forEach(({ label }) => {
-            initialFormValues[label] = '';
+            initialFormValues[label] = null;
         });
         return initialFormValues;
     });
+    const [disableNext, setDisableNext] = useState(false); // State to track disabling of next button
+
 
     const handleInputChange = (fieldName) => (value) => {
         setFormValues({
@@ -29,7 +31,6 @@ const PageForm = () => {
     const handleNext = () => {
         if (currentPage < forms.length - 1) {
             setCurrentPage(currentPage + 1);
-            // Reset form values when moving to the next page
             const nextPageFields = forms[currentPage + 1].fields.map(({ label }) => ({ [label]: '' }));
             setFormValues(Object.assign({}, ...nextPageFields));
         }
@@ -38,7 +39,6 @@ const PageForm = () => {
     const handleBack = () => {
         if (currentPage > 0) {
             setCurrentPage(currentPage - 1);
-            // Reset form values when moving to the previous page
             const prevPageFields = forms[currentPage - 1].fields.map(({ label }) => ({ [label]: '' }));
             setFormValues(Object.assign({}, ...prevPageFields));
         }
@@ -62,9 +62,8 @@ const PageForm = () => {
                                         label={label}
                                         value={formValues[label]}
                                         onChange={handleInputChange(label)}
-                                        required={required}
-                                        disabled={disabled}
-                                        pageNo={currentPage + 1} // Pass pageNo prop
+                                        optional={!required} // Set optional prop based on required
+                                        pageNo={currentPage + 1}
                                     />
                                 )}
                                 {type === 'dropdown' && (
@@ -75,20 +74,19 @@ const PageForm = () => {
                                         options={options}
                                         required={required}
                                         disabled={disabled}
-                                        pageNo={currentPage + 1} // Pass pageNo prop
+                                        pageNo={currentPage + 1}
                                     />
                                 )}
                                 {type === 'file' && (
                                     <FileUploadInput
                                         label={label}
-                                        onChange={(file) => console.log(file)} // You can handle file upload logic here
-                                        pageNo={currentPage + 1} // Pass pageNo prop
+                                        onChange={(file) => console.log(file)}
+                                        required={required}
+                                        pageNo={currentPage + 1}
                                     />
                                 )}
-                                {/* Add more conditional rendering for other types if needed */}
                             </Grid>
                         ))}
-                        {/* Add more fields here */}
                         <Grid item xs={12}>
                             <Box display="flex" justifyContent="space-between">
                                 <Button
@@ -108,7 +106,7 @@ const PageForm = () => {
                                     variant="contained"
                                     color="primary"
                                     onClick={handleNext}
-                                    disabled={currentPage === forms.length - 1}
+                                    disabled={disableNext} // Disable next button if there's a warning or if it's the last page
                                     sx={{
                                         boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
                                         margin: '20px',

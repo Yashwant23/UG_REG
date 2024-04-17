@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TextField, MenuItem } from '@mui/material';
+import { TextField, MenuItem, Typography } from '@mui/material';
 
 const DropdownInput = ({ label, onChange, options, required, pageNo }) => {
     // State to manage the value of the dropdown
@@ -9,6 +9,9 @@ const DropdownInput = ({ label, onChange, options, required, pageNo }) => {
         return storedValue !== null ? storedValue : '';
     });
 
+    // State to track if dropdown is filled
+    const [filled, setFilled] = useState(!!selectedValue);
+
     // Function to handle input change
     const handleInputChange = (event) => {
         const { value } = event.target;
@@ -17,32 +20,42 @@ const DropdownInput = ({ label, onChange, options, required, pageNo }) => {
         localStorage.setItem(`${pageNo}${label}`, value);
         // Propagate change to parent component
         onChange(value);
+        setFilled(!!value); // Update filled state based on selected value
     };
 
-    // Effect to update selected value when value changes from outside
+    // Effect to update selected value and filled state when value changes from outside
     useEffect(() => {
         // Get value from localStorage or default to empty string
         const storedValue = localStorage.getItem(`${pageNo}${label}`);
         setSelectedValue(storedValue !== null ? storedValue : '');
+        setFilled(!!storedValue); // Update filled state based on stored value
     }, [label, pageNo]);
 
     return (
-        <TextField
-            select
-            label={label}
-            variant="outlined"
-            color="primary"
-            fullWidth
-            value={selectedValue}
-            onChange={handleInputChange}
-            required={required}
-        >
-            {options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                </MenuItem>
-            ))}
-        </TextField>
+        <div>
+            <TextField
+                select
+                label={label}
+                variant="outlined"
+                color="primary"
+                fullWidth
+                value={selectedValue}
+                onChange={handleInputChange}
+                required={!required}
+                error={!filled && !required} // Show warning if required and not filled
+            >
+                {options.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                    </MenuItem>
+                ))}
+            </TextField>
+            {!filled && required && (
+                <Typography variant="body2" color="error">
+                    This field is required.
+                </Typography>
+            )}
+        </div>
     );
 };
 
