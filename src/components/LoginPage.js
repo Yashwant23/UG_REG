@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Grid, Typography, TextField, Button } from '@mui/material';
 import { styled } from '@mui/system';
-import img from "../images.jpeg"
+import { useNavigate } from 'react-router-dom';
+import img from '../images.jpeg';
 
 const LoginGrid = styled(Grid)({
     height: '100vh',
@@ -9,14 +10,14 @@ const LoginGrid = styled(Grid)({
 
 const ImageSide = styled(Grid)(({ theme }) => ({
     backgroundImage: `url(${img})`,
-    backgroundSize: 'fit',
+    backgroundSize: 'cover',
     backgroundPosition: 'center',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'white', // Ensuring text is visible on the image
-    textShadow: '2px 2px 4px #000000', // Text shadow for better readability
+    color: 'white',
+    textShadow: '2px 2px 4px #000000',
 }));
 
 const FormSide = styled(Grid)({
@@ -29,37 +30,74 @@ const FormSide = styled(Grid)({
 });
 
 const LoginSideComponent = () => {
-    const [credentials, setCredentials] = useState({ applicationNo: '', mobileNo: '', email: '' });
+    const navigate = useNavigate();
+    const [credentials, setCredentials] = useState({
+        applicationNo: '',
+        mobileNo: '',
+        email: '',
+    });
 
-    const handleChange = (event) => {
-        setCredentials({
-            ...credentials,
-            [event.target.name]: event.target.value,
-        });
+    const [errors, setErrors] = useState({});
+
+    const validateApplicationNo = (number) => {
+        return number.length === 12 && /^\d+$/.test(number);
     };
 
-    const handleSubmit = async (event) => {
+    const validateMobileNo = (number) => {
+        return number.length === 10 && /^\d+$/.test(number);
+    };
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setCredentials({ ...credentials, [name]: value });
+
+        // Validate the input as the user types
+        switch (name) {
+            case 'applicationNo':
+                setErrors({
+                    ...errors,
+                    applicationNo: !validateApplicationNo(value),
+                });
+                break;
+            case 'mobileNo':
+                setErrors({
+                    ...errors,
+                    mobileNo: !validateMobileNo(value),
+                });
+                break;
+            case 'email':
+                setErrors({
+                    ...errors,
+                    email: !validateEmail(value),
+                });
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Add form validation logic here
+        // Perform final validation checks before submitting the form
+        const isValidApplicationNo = validateApplicationNo(credentials.applicationNo);
+        const isValidMobileNo = validateMobileNo(credentials.mobileNo);
+        const isValidEmail = validateEmail(credentials.email);
 
-        try {
-            const response = await fetch('https://api.example.com/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(credentials),
-            });
+        setErrors({
+            applicationNo: !isValidApplicationNo,
+            mobileNo: !isValidMobileNo,
+            email: !isValidEmail,
+        });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            console.error(error);
+        // If all fields are valid, navigate to the next route
+        if (isValidApplicationNo && isValidMobileNo && isValidEmail) {
+            navigate('/dashboard'); // Navigate to the desired route
         }
     };
 
@@ -69,19 +107,27 @@ const LoginSideComponent = () => {
                 {/* Additional college details can be added here */}
             </ImageSide>
             <FormSide item xs={12} md={4}>
-                <Typography variant="h4" gutterBottom sx={{
-                    fontWeight: 'bold',
-                    color: '#2196F3', // Blue color for the welcome text
-                    textAlign: 'center',
-                    marginBottom: '20px',
-                }}>
+                <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{
+                        fontWeight: 'bold',
+                        color: '#2196F3',
+                        textAlign: 'center',
+                        marginBottom: '20px',
+                    }}
+                >
                     WELCOMES YOU TO THE IIT JEE ADMISSION PORTAL 👋
                 </Typography>
-                <Typography variant="h6" gutterBottom sx={{
-                    color: '#21CBF3', // Lighter blue color for the admission text
-                    textAlign: 'center',
-                    marginBottom: '20px',
-                }}>
+                <Typography
+                    variant="h6"
+                    gutterBottom
+                    sx={{
+                        color: '#21CBF3',
+                        textAlign: 'center',
+                        marginBottom: '20px',
+                    }}
+                >
                     NEW ADMISSION (JEE) - IIT(ISM)
                 </Typography>
                 <form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -94,7 +140,10 @@ const LoginSideComponent = () => {
                         required
                         value={credentials.applicationNo}
                         onChange={handleChange}
-                    // Add more props for styling
+                        error={errors.applicationNo}
+                        helperText={
+                            errors.applicationNo ? 'Application No must be a 12-digit number.' : ''
+                        }
                     />
                     <TextField
                         name="mobileNo"
@@ -105,7 +154,8 @@ const LoginSideComponent = () => {
                         required
                         value={credentials.mobileNo}
                         onChange={handleChange}
-                    // Add more props for styling
+                        error={errors.mobileNo}
+                        helperText={errors.mobileNo ? 'Mobile No must be a 10-digit number.' : ''}
                     />
                     <TextField
                         name="email"
@@ -116,26 +166,31 @@ const LoginSideComponent = () => {
                         required
                         value={credentials.email}
                         onChange={handleChange}
-                    // Add more props for styling
+                        error={errors.email}
+                        helperText={errors.email ? 'Email must be valid.' : ''}
                     />
-                    <Typography variant="body1" gutterBottom sx={{
-                        textAlign: 'center',
-                        color: '#666', // Grey color for the sign-in text
-                        marginBottom: '20px',
-                    }}>
-                        Please sign-in to your account and complete the JEE admission process
+                    <Typography
+                        variant="body1"
+                        gutterBottom
+                        sx={{
+                            textAlign: 'center',
+                            color: '#666',
+                            marginBottom: '20px',
+                        }}
+                    >
+                        Please sign-in to your account and complete the JEE admission process.
                     </Typography>
                     <Button
                         type="submit"
                         variant="contained"
-                        fullWidth // Make the button wider
+                        fullWidth
                         sx={{
                             marginTop: '20px',
-                            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)', // Gradient background
-                            boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)', // Box shadow
+                            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
                             color: 'white',
                             '&:hover': {
-                                background: 'linear-gradient(45deg, #21CBF3 30%, #2196F3 90%)', // Hover effect
+                                background: 'linear-gradient(45deg, #21CBF3 30%, #2196F3 90%)',
                             },
                         }}
                     >

@@ -20,7 +20,8 @@ function App() {
   const router=createBrowserRouter([
     {
       path:"/",
-      element:<><Navbar/><Dashboard/></>
+      element:<><LoginPage/></>
+      // element:<><Navbar/><Dashboard/></>
     },
     {
       path:"/dashboard",
