@@ -38,7 +38,7 @@ const FileUploadInput = ({ label, onChange, required = true, pageNo, disableNext
     }, [file, fileName, label, pageNo, preview]);
 
     useEffect(() => {
-        const storedFileName = localStorage.getItem(`${pageNo}${label}_name`);
+        const storedFileName = localStorage.getItem(`${pageNo}${label}`);
         const storedPreview = localStorage.getItem(`${pageNo}${label}_preview`);
         if (storedFileName) {
             setFileName(storedFileName);
