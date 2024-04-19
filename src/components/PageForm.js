@@ -1,4 +1,3 @@
-// PageForm.js
 import React, { useState, useEffect } from 'react';
 import { Paper, Grid, Button, Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -40,7 +39,26 @@ const PageForm = () => {
     const handleNext = () => {
         if (currentPage < forms.length - 1) {
             setCurrentPage(currentPage + 1);
+            postData(); // Send POST request
+        }
+    };
 
+    const postData = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(forms[currentPage]) // Assuming you want to send the form data
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // Process the response here if needed
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle error
         }
     };
 

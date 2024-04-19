@@ -21,7 +21,7 @@ const TextFieldInput = ({ label, onChange, required, pageNo, disableNext, setDis
             if (value !== null && value !== '') {
                 newDisableNext &= ~1; // Clear the first bit
             } else {
-                newDisableNext &= 1; // Set the first bit
+                newDisableNext |= 1; // Set the first bit
             }
         }
         setDisableNext(newDisableNext);
