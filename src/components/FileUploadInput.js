@@ -3,60 +3,49 @@ import React, { useState, useEffect } from 'react';
 const FileUploadInput = ({ label, onChange, required = true, pageNo, disableNext, setDisableNext }) => {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
-    const [filled, setFilled] = useState(false); // Initialize filled state
+    const [fileName, setFileName] = useState(''); // Add state for file name
 
     const handleInputChange = (event) => {
         const selectedFile = event.target.files[0];
-        setFile(selectedFile);
-        setPreview(URL.createObjectURL(selectedFile));
-        setFilled(true); // Set filled state to true when file is selected
-
-        // Perform the bitwise operation to update disableNext state
-        let newDisableNext = disableNext;
-        if (required) {
-            if (selectedFile !== null) {
-                newDisableNext &= ~1; // Clear the first bit
-            } else {
-                newDisableNext |= 1; // Set the first bit
-            }
+        if (selectedFile) {
+            setFile(selectedFile);
+            setFileName(selectedFile.name); // Set file name
+            setPreview(URL.createObjectURL(selectedFile));
+            setDisableNext(required ? false : disableNext); // Update disableNext based on the required prop
         }
-        setDisableNext(newDisableNext);
+    };
+
+    // Convert file to Base64 string for local storage
+    const readFileAsBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
     };
 
     useEffect(() => {
         const storeFileInLocalStorage = async () => {
             if (file) {
-                const fileData = await readFileAsBytes(file);
-                localStorage.setItem(`${pageNo}${label}_name`, file.name);
-                localStorage.setItem(`${pageNo}${label}_data`, JSON.stringify(fileData));
+                const base64File = await readFileAsBase64(file);
+                localStorage.setItem(`${pageNo}${label}`, fileName);
+                localStorage.setItem(`${pageNo}${label}_data`, base64File);
                 localStorage.setItem(`${pageNo}${label}_preview`, preview);
             }
         };
         storeFileInLocalStorage();
-    }, [file, label, pageNo, preview]);
-
-    const readFileAsBytes = (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const arrayBuffer = event.target.result;
-                const byteArray = new Uint8Array(arrayBuffer);
-                resolve(Array.from(byteArray)); // Convert Uint8Array to regular array
-            };
-            reader.onerror = reject;
-            reader.readAsArrayBuffer(file);
-        });
-    };
+    }, [file, fileName, label, pageNo, preview]);
 
     useEffect(() => {
         const storedFileName = localStorage.getItem(`${pageNo}${label}_name`);
         const storedPreview = localStorage.getItem(`${pageNo}${label}_preview`);
-        if (storedFileName !== null) {
-            onChange(storedFileName);
+        if (storedFileName) {
+            setFileName(storedFileName);
             setPreview(storedPreview);
-            setFilled(true); // Set filled state to true when file is present in localStorage
+            setDisableNext(false); // Enable the next button if file is present
         }
-    }, [label, onChange, pageNo]);
+    }, [label, pageNo]);
 
     return (
         <div>
@@ -65,11 +54,15 @@ const FileUploadInput = ({ label, onChange, required = true, pageNo, disableNext
                 type="file"
                 id={label}
                 onChange={handleInputChange}
-                required={!required}
-            // disabled={disableNext} // Disable input if disableNext is true
+                required={required}
             />
-            {preview && <img src={preview} alt="preview" />}
-            {!filled && required && (
+            {preview && (
+                <div>
+                    <p>{fileName}</p> {/* Display the file name */}
+                    <img src={preview} alt="File preview" style={{ maxWidth: '100%', height: 'auto' }} />
+                </div>
+            )}
+            {!file && required && (
                 <p style={{ color: 'red' }}>This field is required.</p>
             )}
         </div>

@@ -17,34 +17,34 @@ import FeePayment from './components/FeePayment';
 import Registration from './components/Registration';
 import Downloads from './components/Downloads';
 function App() {
-  const router=createBrowserRouter([
+  const router = createBrowserRouter([
     {
-      path:"/",
-      element:<><LoginPage/></>
+      path: "/",
+      element: <><LoginPage /></>
       // element:<><Navbar/><Dashboard/></>
     },
     {
-      path:"/dashboard",
-      element:<><Navbar/><Dashboard/></>
+      path: "/dashboard",
+      element: <><Navbar /><Dashboard /></>
     },
     {
-      path:"/feepayment",
-      element:<><Navbar/><Registration /></>
+      path: "/feepayment",
+      element: <><Navbar /><Registration /></>
     },
     {
-      path:"/registration",
-      element:<><Navbar/><Registration /></>
+      path: "/registration",
+      element: <><Navbar /><Registration /></>
     },
     {
-      path:"/downloads",
-      element:<><Navbar/><Downloads /></>
+      path: "/downloads",
+      element: <><Navbar /><Downloads /></>
     },
   ])
   return (
     <>
-    <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </>
-);
+  );
 
 }
 
