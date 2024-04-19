@@ -3,7 +3,8 @@ import { Grid, Typography, TextField, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import img from '../images.jpeg';
-
+import axios from 'axios'
+import { Alert } from '@mui/material';
 const LoginGrid = styled(Grid)({
     height: '100vh',
 });
@@ -81,7 +82,12 @@ const LoginSideComponent = () => {
         }
     };
 
-    const handleSubmit = (event) => {
+    const [open, setOpen] = React.useState(false);
+    const [severity, setSeverity] = React.useState('success');
+    const [message, setMessage] = React.useState('');
+
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         // Perform final validation checks before submitting the form
@@ -95,18 +101,48 @@ const LoginSideComponent = () => {
             email: !isValidEmail,
         });
 
-        // If all fields are valid, navigate to the next route
+        // If all fields are valid, make a POST request to the server
         if (isValidApplicationNo && isValidMobileNo && isValidEmail) {
-            navigate('/dashboard'); // Navigate to the desired route
+            try {
+                const response = await axios.post('http://localhost:5000/login', {
+                    email: credentials.email,
+                    admissionNumber: credentials.applicationNo,
+                    phoneNumber: credentials.mobileNo,
+                });
+
+                if (response.status === 200) {
+                    const userData = response.data;
+
+                    // Iterate over the response data and store each key-value pair in local storage
+                    Object.entries(userData).forEach(([key, value]) => {
+                        localStorage.setItem(key, value);
+                    });
+
+                    // Navigate to the dashboard page
+                    navigate('/dashboard');
+                } else {
+                    // If login is invalid, show an alert
+                    setOpen(true);
+                    setSeverity('error');
+                    setMessage('Invalid login details');
+                }
+            } catch (error) {
+                // If there's an error with the request, show an alert
+                setOpen(true);
+                setSeverity('error');
+                setMessage('An error occurred. Please try again later.');
+            }
         }
     };
 
     return (
         <LoginGrid container>
+
             <ImageSide item xs={12} md={8}>
                 {/* Additional college details can be added here */}
             </ImageSide>
             <FormSide item xs={12} md={4}>
+                {open && <Alert severity="error">Invalid login details</Alert>}
                 <Typography
                     variant="h4"
                     gutterBottom
