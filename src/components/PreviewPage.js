@@ -25,9 +25,48 @@ const FormPreviewPage = ({ forms }) => {
     };
 
     // Function to handle navigation to dashboard
-    const handleRegister = () => {
-        navigate('/dashBoard');
+    const handleRegister = async () => {
+        // Prepare the complete form data
+        const formData = forms.map((form) => ({
+            pageNo: form.Page,
+            labels: form.fields.map(({ type, label }) => {
+                if (type === 'file') {
+                    // If the field type is 'file', include both label value and file data
+                    return {
+                        [label]: localStorage.getItem(`${form.Page}${label}`) || 'Not filled',
+                        [`${label}_data`]: localStorage.getItem(`${form.Page}${label}_data`) || 'No file data',
+                    };
+                } else {
+                    // For other types of fields, include only label value
+                    return {
+                        [label]: localStorage.getItem(`${form.Page}${label}`) || 'Not filled',
+                    };
+                }
+            }),
+        }));
+
+        // Create a Blob containing the JSON data
+        const jsonBlob = new Blob([JSON.stringify(formData)], { type: 'application/json' });
+
+        // Create a URL for the Blob
+        const url = URL.createObjectURL(jsonBlob);
+
+        // Create a link element to download the JSON file
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'form_data.json';
+
+        // Simulate a click on the link to trigger the download
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up by revoking the URL object
+        URL.revokeObjectURL(url);
     };
+
+
+
+
 
     return (
         <ThemeProvider theme={theme}>
