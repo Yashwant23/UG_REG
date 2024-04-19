@@ -76,7 +76,7 @@ const forms = [
                 { label: "OBC", value: "OBC" },]
         },
         { type: 'text', label: 'Allocated Category' },
-        { type: 'text', label: 'Date Of Birth' },
+        { type: 'text', label: 'Date Of Birth' ,check:'date'},
         { type: 'text', label: 'Gender' },
         {
             type: 'dropdown', label: 'Preperatory',
@@ -182,11 +182,11 @@ const forms = [
         { type: 'text', label: 'Course Code' },
         { type: 'text', label: 'Course' },
         { type: 'text', label: 'Branch' },
-        { type: 'text', label: 'Jee Advanced Rank' },
-        { type: 'text', label: 'Jee Advance Category Rank' },
+        { type: 'text', label: 'Jee Advanced Rank',check:'number' },
+        { type: 'text', label: 'Jee Advance Category Rank' ,check:'number'},
         { type: 'text', label: 'Bank Name (of Student)' },
-        { type: 'text', label: 'Account No. (of student)' },
-        { type: 'text', label: 'Confirm Account No. (of Student)' },
+        { type: 'text', label: 'Account No. (of student)' ,check:'number'},
+        { type: 'text', label: 'Confirm Account No. (of Student)' ,check:'number'},
         { type: 'text', label: 'IFSC Code (of Student)' },
 
         ]
@@ -199,7 +199,7 @@ const forms = [
             { type: 'text', label: 'Mother\s Name' },
             { type: 'text', label: 'Father\'s Occupation' },
             { type: 'text', label: 'Mother\'s Occupation' },
-            { type: 'text', label: 'Father\'s Income' },
+            { type: 'text', label: 'Father\'s Income' ,check:'number'},
             { type: 'text', label: 'Mother\'s Occupation' },
             { type: 'text', label: 'Parent Mobile Number' ,check:'mobile number'},
             { type: 'text', label: 'Parent Email ID' ,check:'email'},
@@ -208,8 +208,8 @@ const forms = [
             { type: 'text', label: 'Alternative Mobile No.' ,check:'mobile number'},
             { type: 'text', label: 'Alternative Email ID' ,check:'email'},
             { type: 'text', label: 'Bank Name (of Parent)' },
-            { type: 'text', label: 'Account No. (of Parent)' },
-            { type: 'text', label: 'Confirm Account No. (of Parent)' },
+            { type: 'text', label: 'Account No. (of Parent)' ,check:'number'},
+            { type: 'text', label: 'Confirm Account No. (of Parent)' ,check:'number'},
             { type: 'text', label: 'IFSC Code (of Parent)' },
             ]
     },
@@ -220,7 +220,7 @@ const forms = [
             [
                 { type: 'text', label: 'Name of examination'},
                 { type: 'text', label: 'University/Board' },
-                { type: 'text', label: 'Year' },
+                { type: 'text', label: 'Year' ,check:'year'},
                 { type: 'text', label: 'Institution/School'},
                 { type: 'text', label: 'Grade/Percentage' },
                 { type: 'text', label: 'Division' },
@@ -236,11 +236,11 @@ const forms = [
             [
                 { type: 'text', label: 'Name of examination'},
                 { type: 'text', label: 'University/Board' },
-                { type: 'text', label: 'Year' },
+                { type: 'text', label: 'Year' ,check:'year'},
                 { type: 'text', label: 'Grade/Percentage' },
                 { type: 'text', label: 'Division'},
                 { type: 'text', label: 'Major subjects' },
-                { type: 'text', label: 'Migration certificate number' },
+                { type: 'text', label: 'Migration certificate number' ,check:'number'},
                 { type: 'file', label: 'Upload Marksheet {Format:PDF, Max size: 1MB}' },
                 { type: 'file', label: 'Upload Certificate {Format:PDF, Max size: 1MB}' },
             ]
@@ -267,7 +267,7 @@ const forms = [
         Des: "IITISM Email\nInstitute Email Regestration Details",
         fields:
             [
-                { type: 'text', label: 'Email Username' },
+                { type: 'text', label: 'Email Username' ,check:'email'},
                 { type: 'text', label: 'Email Password' },
             ]
     },
@@ -276,8 +276,8 @@ const forms = [
         Des: "Fee Details\nFee Details and Recipt",
         fields:
             [
-                { type: 'text', label: 'Fee Amount' },
-                { type: 'text', label: 'Fee Date' },
+                { type: 'text', label: 'Fee Amount' ,check:'number'},
+                { type: 'text', label: 'Fee Date' ,check:'date'},
                 { type: 'text', label: 'Fee Mode' },
                 { type: 'text', label: 'Transaction ID' },
             ]
