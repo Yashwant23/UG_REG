@@ -2,7 +2,7 @@ const forms = [
     {
         Page: 1,
         Des: "hello welcome to page 1",
-        fields: [{ type: 'text', label: 'Name' , check:'c'},
+        fields: [{ type: 'text', label: 'Name'},
         { type: 'text', label: 'Field 2' },
         { type: 'text', label: 'Field 3' },
         { type: 'text', label: 'Field 4' },
@@ -60,13 +60,13 @@ const forms = [
     {
         Page: 2,
         Des: "Personal Deatils \nEnter Your Personel Details",
-        fields: [{ type: 'text', label: 'Jee Main Application Number' },
+        fields: [{ type: 'text', label: 'Jee Main Application Number' , check:'application number'},
         { type: 'text', label: 'Institute Name' },
         { type: 'text', label: 'First Name' },
         { type: 'text', label: 'Middle Name', required: false, },
         { type: 'text', label: 'Last_Name' },
-        { type: 'text', label: 'Email' },
-        { type: 'text', label: 'Contact Number' },
+        { type: 'text', label: 'Email' , check:'email'},
+        { type: 'text', label: 'Contact Number', check:'mobile number' },
         {
             type: 'dropdown', label: 'Category',
             options: [
@@ -90,7 +90,7 @@ const forms = [
                 { label: "Yes", value: "Yes" },
                 { label: "No", value: "NO" },]
         },
-        { type: 'text', label: 'Adhar Number' },
+        { type: 'text', label: 'Aadhar Number' , check:'aadhar number'},
         { type: 'text', label: 'Country' },
         {
             type: 'dropdown',
@@ -136,7 +136,7 @@ const forms = [
             ]
         },
         { type: 'text', label: 'City' },
-        { type: 'text', label: 'Pincode' },
+        { type: 'text', label: 'Pincode', check:'pincode' },
         { type: 'text', label: 'Permanent Address 1' },
         { type: 'text', label: 'Permanent Address 2' },
         {
@@ -162,7 +162,7 @@ const forms = [
                 { label: "Shikh", value: "Shikh" },
             ]
         },
-        { type: 'text', label: 'Birthplace' },
+        { type: 'text', label: 'Birthplace' , check:'date'},
         { type: 'file', label: 'Upload Photo' },
         { type: 'file', label: 'Upload Signature' },
         ]
@@ -201,12 +201,12 @@ const forms = [
             { type: 'text', label: 'Mother\'s Occupation' },
             { type: 'text', label: 'Father\'s Income' },
             { type: 'text', label: 'Mother\'s Occupation' },
-            { type: 'text', label: 'Parent Mobile Number' },
-            { type: 'text', label: 'Parent Email ID' },
+            { type: 'text', label: 'Parent Mobile Number' ,check:'mobile number'},
+            { type: 'text', label: 'Parent Email ID' ,check:'email'},
             { type: 'text', label: 'Guardian Name' },
             { type: 'text', label: 'Gurdian Relation' },
-            { type: 'text', label: 'Alternative Mobile No.' },
-            { type: 'text', label: 'Alternative Email ID' },
+            { type: 'text', label: 'Alternative Mobile No.' ,check:'mobile number'},
+            { type: 'text', label: 'Alternative Email ID' ,check:'email'},
             { type: 'text', label: 'Bank Name (of Parent)' },
             { type: 'text', label: 'Account No. (of Parent)' },
             { type: 'text', label: 'Confirm Account No. (of Parent)' },
