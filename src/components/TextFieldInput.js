@@ -1,8 +1,7 @@
-// TextFieldInput.js
 import React, { useEffect, useState } from 'react';
 import { TextField, Typography } from '@mui/material';
 
-const TextFieldInput = ({ label, onChange, optional, pageNo }) => {
+const TextFieldInput = ({ label, onChange, required, pageNo, disableNext, setDisableNext }) => {
     const [inputValue, setInputValue] = useState(() => {
         const storedValue = localStorage.getItem(`${pageNo}${label}`);
         return storedValue !== null ? storedValue : '';
@@ -15,6 +14,17 @@ const TextFieldInput = ({ label, onChange, optional, pageNo }) => {
         localStorage.setItem(`${pageNo}${label}`, value);
         onChange(value);
         setFilled(!!value); // Update filled state based on input value
+
+        // Perform the bitwise operation to update disableNext state
+        let newDisableNext = disableNext;
+        if (required) {
+            if (value !== null && value !== '') {
+                newDisableNext &= ~1; // Clear the first bit
+            } else {
+                newDisableNext &= 1; // Set the first bit
+            }
+        }
+        setDisableNext(newDisableNext);
     };
 
     useEffect(() => {
@@ -32,10 +42,11 @@ const TextFieldInput = ({ label, onChange, optional, pageNo }) => {
                 fullWidth
                 value={inputValue}
                 onChange={handleInputChange}
-                required={optional}
-                error={!filled && optional} // Show warning if required and not filled
+                required={required}
+                error={!filled && required} // Show warning if required and not filled
+            // Disable input if disableNext is true
             />
-            {!filled && !optional && (
+            {!filled && required && (
                 <Typography variant="body2" color="error">
                     This field is required.
                 </Typography>

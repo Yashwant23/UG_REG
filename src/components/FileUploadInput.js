@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const FileUploadInput = ({ label, onChange, required = true, pageNo }) => {
+const FileUploadInput = ({ label, onChange, required = true, pageNo, disableNext, setDisableNext }) => {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [filled, setFilled] = useState(false); // Initialize filled state
@@ -10,6 +10,17 @@ const FileUploadInput = ({ label, onChange, required = true, pageNo }) => {
         setFile(selectedFile);
         setPreview(URL.createObjectURL(selectedFile));
         setFilled(true); // Set filled state to true when file is selected
+
+        // Perform the bitwise operation to update disableNext state
+        let newDisableNext = disableNext;
+        if (required) {
+            if (selectedFile !== null) {
+                newDisableNext &= ~1; // Clear the first bit
+            } else {
+                newDisableNext |= 1; // Set the first bit
+            }
+        }
+        setDisableNext(newDisableNext);
     };
 
     useEffect(() => {
@@ -55,6 +66,7 @@ const FileUploadInput = ({ label, onChange, required = true, pageNo }) => {
                 id={label}
                 onChange={handleInputChange}
                 required={!required}
+            // disabled={disableNext} // Disable input if disableNext is true
             />
             {preview && <img src={preview} alt="preview" />}
             {!filled && required && (

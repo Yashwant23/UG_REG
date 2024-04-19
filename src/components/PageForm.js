@@ -1,5 +1,6 @@
+// PageForm.js
 import React, { useState, useEffect } from 'react';
-import { Paper, Grid, Button, Typography, Box } from '@mui/material';
+import { Paper, Grid, Button, Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextFieldInput from './TextFieldInput';
 import DropdownInput from './DropdownInput';
@@ -11,36 +12,41 @@ const theme = createTheme();
 
 const PageForm = () => {
     const [currentPage, setCurrentPage] = useState(0);
-    const [formValues, setFormValues] = useState(() => {
-        const initialFormValues = {};
-        forms[currentPage].fields.forEach(({ label }) => {
-            initialFormValues[label] = null;
-        });
-        return initialFormValues;
-    });
     const [disableNext, setDisableNext] = useState(false); // State to track disabling of next button
+
+    useEffect(() => {
+        // Function to check if any field has a warning
+        const hasWarning = () => {
+            let hasWarning = false;
+            // Iterate over all fields in the current page
+            forms[currentPage].fields.forEach(({ label, required }) => {
+                // Check if the field is required and not filled
+                const storedValue = localStorage.getItem(`${currentPage + 1}${label}`);
+                if (required && !storedValue) {
+                    hasWarning = true;
+                }
+            });
+            return hasWarning;
+        };
+
+        setDisableNext(1); // Disable next button if any field has a warning
+    }, [currentPage, setDisableNext]);
 
 
     const handleInputChange = (fieldName) => (value) => {
-        setFormValues({
-            ...formValues,
-            [fieldName]: value,
-        });
+        // No need to update formValues in this version
     };
 
     const handleNext = () => {
         if (currentPage < forms.length - 1) {
             setCurrentPage(currentPage + 1);
-            const nextPageFields = forms[currentPage + 1].fields.map(({ label }) => ({ [label]: '' }));
-            setFormValues(Object.assign({}, ...nextPageFields));
+
         }
     };
 
     const handleBack = () => {
         if (currentPage > 0) {
             setCurrentPage(currentPage - 1);
-            const prevPageFields = forms[currentPage - 1].fields.map(({ label }) => ({ [label]: '' }));
-            setFormValues(Object.assign({}, ...prevPageFields));
         }
     };
 
@@ -55,25 +61,27 @@ const PageForm = () => {
                 <PageBar currentPage={currentPage} totalPages={forms.length} des={forms[currentPage].Des} />
                 <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
-                        {forms[currentPage].fields.map(({ type, label, options, required, disabled }, index) => (
+                        {forms[currentPage].fields.map(({ type, label, options, required = true, disabled }, index) => (
                             <Grid key={index} item xs={12} sm={6} md={3} lg={3} xl={3}>
                                 {type === 'text' && (
                                     <TextFieldInput
                                         label={label}
-                                        value={formValues[label]}
                                         onChange={handleInputChange(label)}
-                                        optional={!required} // Set optional prop based on required
+                                        required={required} // Set optional prop based on required
+                                        disableNext={disableNext}
+                                        setDisableNext={setDisableNext}
                                         pageNo={currentPage + 1}
                                     />
                                 )}
                                 {type === 'dropdown' && (
                                     <DropdownInput
                                         label={label}
-                                        value={formValues[label]}
                                         onChange={handleInputChange(label)}
                                         options={options}
                                         required={required}
                                         disabled={disabled}
+                                        disableNext={disableNext}
+                                        setDisableNext={setDisableNext}
                                         pageNo={currentPage + 1}
                                     />
                                 )}
@@ -82,6 +90,8 @@ const PageForm = () => {
                                         label={label}
                                         onChange={(file) => console.log(file)}
                                         required={required}
+                                        disableNext={disableNext}
+                                        setDisableNext={setDisableNext}
                                         pageNo={currentPage + 1}
                                     />
                                 )}
@@ -106,7 +116,7 @@ const PageForm = () => {
                                     variant="contained"
                                     color="primary"
                                     onClick={handleNext}
-                                    disabled={disableNext} // Disable next button if there's a warning or if it's the last page
+                                    disabled={disableNext || currentPage === forms.length - 1} // Disable next button if there's a warning or if it's the last page
                                     sx={{
                                         boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
                                         margin: '20px',

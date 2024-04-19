@@ -61,9 +61,9 @@ const forms = [
         Page: 2,
         Des: "Personal Deatils \nEnter Your Personel Details",
         fields: [{ type: 'text', label: 'Jee Main Application Number' },
-        { type: 'text', label: 'Institute_Name' },
-        { type: 'text', label: 'First_Name' },
-        { type: 'text', label: 'Middle_Name' },
+        { type: 'text', label: 'Institute Name' },
+        { type: 'text', label: 'First Name' },
+        { type: 'text', label: 'Middle Name', required: false, },
         { type: 'text', label: 'Last_Name' },
         { type: 'text', label: 'Email' },
         { type: 'text', label: 'Contact Number' },
@@ -225,7 +225,7 @@ const forms = [
         fields:
             [
                 {
-                    type: 'dropdown', label: 'Food Habit',
+                    type: 'dropdown', label: 'Food Habit', required: true,
                     options: [
                         { label: "Veg", value: "Veg" },
                         { label: "Non-Veg", value: "Non-Veg" },]

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TextField, MenuItem, Typography } from '@mui/material';
 
-const DropdownInput = ({ label, onChange, options, required, pageNo }) => {
+const DropdownInput = ({ label, onChange, options, required, pageNo, disableNext, setDisableNext }) => {
     // State to manage the value of the dropdown
     const [selectedValue, setSelectedValue] = useState(() => {
         // Get value from localStorage or default to empty string
@@ -21,6 +21,17 @@ const DropdownInput = ({ label, onChange, options, required, pageNo }) => {
         // Propagate change to parent component
         onChange(value);
         setFilled(!!value); // Update filled state based on selected value
+
+        // Perform the bitwise operation to update disableNext state
+        let newDisableNext = disableNext;
+        if (required) {
+            if (value !== null && value !== '') {
+                newDisableNext &= ~1; // Clear the first bit
+            } else {
+                newDisableNext |= 1; // Set the first bit
+            }
+        }
+        setDisableNext(newDisableNext);
     };
 
     // Effect to update selected value and filled state when value changes from outside
@@ -41,8 +52,9 @@ const DropdownInput = ({ label, onChange, options, required, pageNo }) => {
                 fullWidth
                 value={selectedValue}
                 onChange={handleInputChange}
-                required={!required}
-                error={!filled && !required} // Show warning if required and not filled
+                required={required}
+                error={!filled && required} // Show warning if required and not filled
+            // disabled={disableNext} // Disable input if disableNext is true
             >
                 {options.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
