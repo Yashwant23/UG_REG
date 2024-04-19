@@ -67,7 +67,7 @@ const PageForm = () => {
                         <PageBar currentPage={currentPage} totalPages={forms.length} des={forms[currentPage].Des} />
                         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
-                                {forms[currentPage].fields.map(({ type, label, options, required = true, disabled }, index) => (
+                                {forms[currentPage].fields.map(({ type, label, options, required = true, c="", disabled }, index) => (
                                     <Grid key={index} item xs={12} sm={6} md={3} lg={3} xl={3}>
                                         {type === 'text' && (
                                             <TextFieldInput
@@ -77,6 +77,7 @@ const PageForm = () => {
                                                 disableNext={disableNext}
                                                 setDisableNext={setDisableNext}
                                                 pageNo={currentPage + 1}
+                                                check={c}
                                             />
                                         )}
                                         {type === 'dropdown' && (

@@ -1,8 +1,8 @@
 const forms = [
     {
         Page: 1,
-        Des: "hellow welcome to page 1",
-        fields: [{ type: 'text', label: 'Name' },
+        Des: "hello welcome to page 1",
+        fields: [{ type: 'text', label: 'Name' , check:'c'},
         { type: 'text', label: 'Field 2' },
         { type: 'text', label: 'Field 3' },
         { type: 'text', label: 'Field 4' },
@@ -215,12 +215,38 @@ const forms = [
     },
     {
         Page: 5,
-        Des: "Demo",
+        Des: "Academic details (10th standard)",
         fields:
-            []
+            [
+                { type: 'text', label: 'Name of examination'},
+                { type: 'text', label: 'University/Board' },
+                { type: 'text', label: 'Year' },
+                { type: 'text', label: 'Institution/School'},
+                { type: 'text', label: 'Grade/Percentage' },
+                { type: 'text', label: 'Division' },
+                { type: 'text', label: 'Major subjects' },
+                { type: 'file', label: 'Upload Marksheet {Format:PDF, Max size: 1MB}' },
+                { type: 'file', label: 'Upload Certificate {Format:PDF, Max size: 1MB}' },
+            ]
     },
     {
         Page: 6,
+        Des: "Academic details (12th standard)",
+        fields:
+            [
+                { type: 'text', label: 'Name of examination'},
+                { type: 'text', label: 'University/Board' },
+                { type: 'text', label: 'Year' },
+                { type: 'text', label: 'Grade/Percentage' },
+                { type: 'text', label: 'Division'},
+                { type: 'text', label: 'Major subjects' },
+                { type: 'text', label: 'Migration certificate number' },
+                { type: 'file', label: 'Upload Marksheet {Format:PDF, Max size: 1MB}' },
+                { type: 'file', label: 'Upload Certificate {Format:PDF, Max size: 1MB}' },
+            ]
+    },
+    {
+        Page: 7,
         Des: "Hostel Details\nCheck Your Hostel Details",
         fields:
             [
@@ -237,7 +263,7 @@ const forms = [
             ]
     },
     {
-        Page: 7,
+        Page: 8,
         Des: "IITISM Email\nInstitute Email Regestration Details",
         fields:
             [
@@ -246,7 +272,7 @@ const forms = [
             ]
     },
     {
-        Page: 8,
+        Page: 9,
         Des: "Fee Details\nFee Details and Recipt",
         fields:
             [
@@ -258,7 +284,5 @@ const forms = [
     },
 
 ]
-
-
 
 export default forms
