@@ -45,7 +45,7 @@ const PageForm = () => {
 
     const postData = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/data', {
+            const response = await fetch('http://localhost:8000/new-data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
