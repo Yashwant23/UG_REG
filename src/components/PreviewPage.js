@@ -1,8 +1,9 @@
 import React from 'react';
-import { Paper, Grid, Button, Box, Typography } from '@mui/material';
+import { Paper, Grid, Button, Box, Typography, LinearProgress } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook for navigation
 import forms from '../formDetails';
+import axios from 'axios';
 
 // Create a theme instance with a darker blue and green color palette
 const theme = createTheme({
@@ -18,6 +19,7 @@ const theme = createTheme({
 
 const FormPreviewPage = ({ forms }) => {
     const navigate = useNavigate(); // Hook for navigation
+    const [loading, setLoading] = React.useState(false);
 
     // Function to handle printing of the page
     const handlePrint = () => {
@@ -26,47 +28,48 @@ const FormPreviewPage = ({ forms }) => {
 
     // Function to handle navigation to dashboard
     const handleRegister = async () => {
-        // Prepare the complete form data
-        const formData = forms.map((form) => ({
-            pageNo: form.Page,
-            labels: form.fields.map(({ type, label }) => {
-                if (type === 'file') {
-                    // If the field type is 'file', include both label value and file data
-                    return {
-                        [label]: localStorage.getItem(`${form.Page}${label}`) || 'Not filled',
-                        [`${label}_data`]: localStorage.getItem(`${form.Page}${label}_data`) || 'No file data',
-                    };
-                } else {
-                    // For other types of fields, include only label value
-                    return {
-                        [label]: localStorage.getItem(`${form.Page}${label}`) || 'Not filled',
-                    };
-                }
-            }),
-        }));
+        setLoading(true);
+        // Iterate through each form page and send data to the server
+        for (const form of forms) {
+            const pageData = {
+                pageNo: form.Page,
+                labels: form.fields.map(({ type, label }) => {
+                    if (type === 'file') {
+                        // If the field type is 'file', include both label value and file data
+                        return {
+                            [label]: localStorage.getItem(`${form.Page}${label}`) || 'Not filled',
+                            [`${label}_data`]: localStorage.getItem(`${form.Page}${label}_data`) || 'No file data',
+                        };
+                    } else {
+                        // For other types of fields, include only label value
+                        return {
+                            [label]: localStorage.getItem(`${form.Page}${label}`) || 'Not filled',
+                        };
+                    }
+                }),
+            };
 
-        // Create a Blob containing the JSON data
-        const jsonBlob = new Blob([JSON.stringify(formData)], { type: 'application/json' });
+            try {
+                // Make a POST request to the server with pageData
+                const response = await axios.post('http://localhost:5000/register', pageData);
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error registering page data:', error);
+                // Handle error
+            }
+        }
+        setLoading(false);
 
-        // Create a URL for the Blob
-        const url = URL.createObjectURL(jsonBlob);
-
-        // Create a link element to download the JSON file
+        // Generate and download the JSON file
+        const formDataJson = JSON.stringify(forms, null, 2);
+        const blob = new Blob([formDataJson], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
         link.download = 'form_data.json';
-
-        // Simulate a click on the link to trigger the download
-        document.body.appendChild(link);
         link.click();
-
-        // Clean up by revoking the URL object
         URL.revokeObjectURL(url);
     };
-
-
-
-
 
     return (
         <ThemeProvider theme={theme}>
@@ -104,10 +107,12 @@ const FormPreviewPage = ({ forms }) => {
                         variant="contained"
                         color="primary"
                         onClick={handleRegister}
+                        disabled={loading}
                     >
-                        Register
+                        {loading ? 'Uploading...' : 'Register'}
                     </Button>
                 </Box>
+                {loading && <LinearProgress />}
             </Paper>
         </ThemeProvider>
     );
