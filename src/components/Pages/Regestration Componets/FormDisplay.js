@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Paper, Grid, Button, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TextFieldInput from './TextFieldInput';
-import DropdownInput from './DropdownInput';
-import FileUploadInput from './FileUploadInput';
-import forms from '../formDetails'
+import TextFieldInput from '../../Inputs/TextFieldInput';
+import DropdownInput from '../../Inputs/DropdownInput';
+import FileUploadInput from '../../Inputs/FileUploadInput';
+import forms from '../../../formDetails'
 const theme = createTheme(); // Import or create your own theme
 
 const FormDisplay = ({ fields, Page, Des }) => {

@@ -1,8 +1,8 @@
 const forms = [
     {
         Page: 1,
-        Des: "hello welcome to page 1",
-        fields: [{ type: 'text', label: 'Name'},
+        Des: "CCA Form",
+        fields: [{ type: 'text', label: 'Name' },
         { type: 'text', label: 'Field 2' },
         { type: 'text', label: 'Field 3' },
         { type: 'text', label: 'Field 4' },
@@ -60,13 +60,13 @@ const forms = [
     {
         Page: 2,
         Des: "Personal Deatils \nEnter Your Personel Details",
-        fields: [{ type: 'text', label: 'Jee Main Application Number' , check:'application number'},
+        fields: [{ type: 'text', label: 'Jee Main Application Number', check: 'application number' },
         { type: 'text', label: 'Institute Name' },
         { type: 'text', label: 'First Name' },
         { type: 'text', label: 'Middle Name', required: false, },
         { type: 'text', label: 'Last_Name' },
-        { type: 'text', label: 'Email' , check:'email'},
-        { type: 'text', label: 'Contact Number', check:'mobile number' },
+        { type: 'text', label: 'Email', check: 'email' },
+        { type: 'text', label: 'Contact Number', check: 'mobile number' },
         {
             type: 'dropdown', label: 'Category',
             options: [
@@ -76,7 +76,7 @@ const forms = [
                 { label: "OBC", value: "OBC" },]
         },
         { type: 'text', label: 'Allocated Category' },
-        { type: 'text', label: 'Date Of Birth' ,check:'date'},
+        { type: 'text', label: 'Date Of Birth', check: 'date' },
         { type: 'text', label: 'Gender' },
         {
             type: 'dropdown', label: 'Preperatory',
@@ -90,7 +90,7 @@ const forms = [
                 { label: "Yes", value: "Yes" },
                 { label: "No", value: "NO" },]
         },
-        { type: 'text', label: 'Aadhar Number' , check:'aadhar number'},
+        { type: 'text', label: 'Aadhar Number', check: 'aadhar number' },
         { type: 'text', label: 'Country' },
         {
             type: 'dropdown',
@@ -136,7 +136,7 @@ const forms = [
             ]
         },
         { type: 'text', label: 'City' },
-        { type: 'text', label: 'Pincode', check:'pincode' },
+        { type: 'text', label: 'Pincode', check: 'pincode' },
         { type: 'text', label: 'Permanent Address 1' },
         { type: 'text', label: 'Permanent Address 2' },
         {
@@ -162,7 +162,7 @@ const forms = [
                 { label: "Shikh", value: "Shikh" },
             ]
         },
-        { type: 'text', label: 'Birthplace' , check:'date'},
+        { type: 'text', label: 'Birthplace', check: 'date' },
         { type: 'file', label: 'Upload Photo' },
         { type: 'file', label: 'Upload Signature' },
         ]
@@ -182,11 +182,11 @@ const forms = [
         { type: 'text', label: 'Course Code' },
         { type: 'text', label: 'Course' },
         { type: 'text', label: 'Branch' },
-        { type: 'text', label: 'Jee Advanced Rank',check:'number' },
-        { type: 'text', label: 'Jee Advance Category Rank' ,check:'number'},
+        { type: 'text', label: 'Jee Advanced Rank', check: 'number' },
+        { type: 'text', label: 'Jee Advance Category Rank', check: 'number' },
         { type: 'text', label: 'Bank Name (of Student)' },
-        { type: 'text', label: 'Account No. (of student)' ,check:'number'},
-        { type: 'text', label: 'Confirm Account No. (of Student)' ,check:'number'},
+        { type: 'text', label: 'Account No. (of student)', check: 'number' },
+        { type: 'text', label: 'Confirm Account No. (of Student)', check: 'number' },
         { type: 'text', label: 'IFSC Code (of Student)' },
 
         ]
@@ -199,17 +199,17 @@ const forms = [
             { type: 'text', label: 'Mother\s Name' },
             { type: 'text', label: 'Father\'s Occupation' },
             { type: 'text', label: 'Mother\'s Occupation' },
-            { type: 'text', label: 'Father\'s Income' ,check:'number'},
+            { type: 'text', label: 'Father\'s Income', check: 'number' },
             { type: 'text', label: 'Mother\'s Occupation' },
-            { type: 'text', label: 'Parent Mobile Number' ,check:'mobile number'},
-            { type: 'text', label: 'Parent Email ID' ,check:'email'},
+            { type: 'text', label: 'Parent Mobile Number', check: 'mobile number' },
+            { type: 'text', label: 'Parent Email ID', check: 'email' },
             { type: 'text', label: 'Guardian Name' },
             { type: 'text', label: 'Gurdian Relation' },
-            { type: 'text', label: 'Alternative Mobile No.' ,check:'mobile number'},
-            { type: 'text', label: 'Alternative Email ID' ,check:'email'},
+            { type: 'text', label: 'Alternative Mobile No.', check: 'mobile number' },
+            { type: 'text', label: 'Alternative Email ID', check: 'email' },
             { type: 'text', label: 'Bank Name (of Parent)' },
-            { type: 'text', label: 'Account No. (of Parent)' ,check:'number'},
-            { type: 'text', label: 'Confirm Account No. (of Parent)' ,check:'number'},
+            { type: 'text', label: 'Account No. (of Parent)', check: 'number' },
+            { type: 'text', label: 'Confirm Account No. (of Parent)', check: 'number' },
             { type: 'text', label: 'IFSC Code (of Parent)' },
             ]
     },
@@ -218,10 +218,10 @@ const forms = [
         Des: "Academic details (10th standard)",
         fields:
             [
-                { type: 'text', label: 'Name of examination'},
+                { type: 'text', label: 'Name of examination' },
                 { type: 'text', label: 'University/Board' },
-                { type: 'text', label: 'Year' ,check:'year'},
-                { type: 'text', label: 'Institution/School'},
+                { type: 'text', label: 'Year', check: 'year' },
+                { type: 'text', label: 'Institution/School' },
                 { type: 'text', label: 'Grade/Percentage' },
                 { type: 'text', label: 'Division' },
                 { type: 'text', label: 'Major subjects' },
@@ -234,13 +234,13 @@ const forms = [
         Des: "Academic details (12th standard)",
         fields:
             [
-                { type: 'text', label: 'Name of examination'},
+                { type: 'text', label: 'Name of examination' },
                 { type: 'text', label: 'University/Board' },
-                { type: 'text', label: 'Year' ,check:'year'},
+                { type: 'text', label: 'Year', check: 'year' },
                 { type: 'text', label: 'Grade/Percentage' },
-                { type: 'text', label: 'Division'},
+                { type: 'text', label: 'Division' },
                 { type: 'text', label: 'Major subjects' },
-                { type: 'text', label: 'Migration certificate number' ,check:'number'},
+                { type: 'text', label: 'Migration certificate number', check: 'number' },
                 { type: 'file', label: 'Upload Marksheet {Format:PDF, Max size: 1MB}' },
                 { type: 'file', label: 'Upload Certificate {Format:PDF, Max size: 1MB}' },
             ]
@@ -267,7 +267,7 @@ const forms = [
         Des: "IITISM Email\nInstitute Email Regestration Details",
         fields:
             [
-                { type: 'text', label: 'Email Username' ,check:'email'},
+                { type: 'text', label: 'Email Username', check: 'email' },
                 { type: 'text', label: 'Email Password' },
             ]
     },
@@ -276,8 +276,8 @@ const forms = [
         Des: "Fee Details\nFee Details and Recipt",
         fields:
             [
-                { type: 'text', label: 'Fee Amount' ,check:'number'},
-                { type: 'text', label: 'Fee Date' ,check:'date'},
+                { type: 'text', label: 'Fee Amount', check: 'number' },
+                { type: 'text', label: 'Fee Date', check: 'date' },
                 { type: 'text', label: 'Fee Mode' },
                 { type: 'text', label: 'Transaction ID' },
             ]

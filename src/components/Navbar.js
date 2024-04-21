@@ -1,8 +1,10 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem } from '@mui/material';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import image from '../images.jpeg'
 const Navbar = () => {
+    const navigate = useNavigate(); // Hook for navigation
+
     // State for anchor element of the avatar menu
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -16,6 +18,14 @@ const Navbar = () => {
         setAnchorEl(null);
     };
 
+    // Function to handle logout
+    const handleLogout = () => {
+        // Clear local storage
+        localStorage.clear();
+        // Navigate to home page
+        navigate('/');
+    };
+
     return (
         <AppBar position="static" sx={{
             maxWidth: '100%', // Set the maximum width to 90% of the viewport width
@@ -25,6 +35,7 @@ const Navbar = () => {
         }}>
             <Toolbar>
                 {/* Left side: Logo and name */}
+                <img src={image} alt="logo" style={{ height: '40px', marginRight: '10px' }} />
                 <Typography variant="h6" sx={{ flexGrow: 1 }}>
                     IIT ISM
                 </Typography>
@@ -44,13 +55,12 @@ const Navbar = () => {
                     onClose={handleAvatarClose}
                 >
                     <MenuItem onClick={handleAvatarClose}>User Name</MenuItem>
-                    <MenuItem onClick={handleAvatarClose}>Logout</MenuItem>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
             </Toolbar>
 
             {/* Second layer: Navigation options */}
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                {/* <Link to="/"><Button color="inherit">Dashboard</Button></Link> */}
                 <Link to="/dashboard"><Button color="inherit">Dashboard</Button></Link>
                 <Link to="/registration"><Button color="inherit">Fee Payment</Button></Link>
                 <Link to="/registration"><Button color="inherit">Registration</Button></Link>

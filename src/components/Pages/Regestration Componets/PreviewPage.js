@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper, Grid, Button, Box, Typography, LinearProgress } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook for navigation
-import forms from '../formDetails';
+import forms from '../../../formDetails';
 import axios from 'axios';
 
 // Create a theme instance with a darker blue and green color palette

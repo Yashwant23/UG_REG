@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Typography, TextField, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
-import img from '../images.jpeg';
+import img from '../../mbc_iit_ism_cover.jpeg';
 import axios from 'axios'
 import { Alert } from '@mui/material';
 const LoginGrid = styled(Grid)({
@@ -11,7 +11,7 @@ const LoginGrid = styled(Grid)({
 
 const ImageSide = styled(Grid)(({ theme }) => ({
     backgroundImage: `url(${img})`,
-    backgroundSize: 'cover',
+    backgroundSize: 'fit',
     backgroundPosition: 'center',
     display: 'flex',
     flexDirection: 'column',

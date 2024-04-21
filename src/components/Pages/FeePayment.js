@@ -1,5 +1,5 @@
 import React from 'react'
-import PageForm from './PageForm'
+import PageForm from './Regestration Componets/PageForm'
 
 function FeePayment() {
   return (

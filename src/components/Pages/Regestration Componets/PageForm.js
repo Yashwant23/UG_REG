@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, Grid, Button, Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TextFieldInput from './TextFieldInput';
-import DropdownInput from './DropdownInput';
-import FileUploadInput from './FileUploadInput';
+import TextFieldInput from '../../Inputs/TextFieldInput';
+import DropdownInput from '../../Inputs/DropdownInput';
+import FileUploadInput from '../../Inputs/FileUploadInput';
 import PageBar from './PageBar';
 import FormPreviewPage from './PreviewPage'; // Import the FormPreviewPage component
-import forms from '../formDetails';
+import forms from '../../../formDetails';
 
 const theme = createTheme();
 
@@ -67,7 +67,7 @@ const PageForm = () => {
                         <PageBar currentPage={currentPage} totalPages={forms.length} des={forms[currentPage].Des} />
                         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
-                                {forms[currentPage].fields.map(({ type, label, options, required = true, check="", disabled }, index) => (
+                                {forms[currentPage].fields.map(({ type, label, options, required = true, check = "", disabled }, index) => (
                                     <Grid key={index} item xs={12} sm={6} md={3} lg={3} xl={3}>
                                         {type === 'text' && (
                                             <TextFieldInput
